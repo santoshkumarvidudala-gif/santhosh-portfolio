@@ -1,0 +1,160 @@
+---
+// src/pages/index.astro
+import '../styles/global.css';
+
+const pageTitle = "Vidudala Santhosh Kumar | Portfolio";
+const snapStoreLink = "https://play.google.com/store/apps/details?id=com.snap2contacts";
+const linkedInLink = "https://linkedin.com/in/YOUR_PROFILE"; 
+const emailContact = "mailto:santhosh@yourdomain.com"; 
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{pageTitle}</title>
+		
+		<meta name="google-adsense-account" content="ca-pub-7816244517423569">
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7816244517423569" crossorigin="anonymous"></script>
+
+		<style>
+			html { scroll-behavior: smooth; }
+			body { -webkit-font-smoothing: antialiased; }
+		</style>
+	</head>
+	<body class="bg-slate-950 text-slate-200 selection:bg-indigo-500/30 font-sans leading-tight overflow-x-hidden text-pretty">
+		
+		<main class="max-w-7xl mx-auto px-5 py-12 md:py-24">
+			
+			<header class="mb-12 md:mb-24 space-y-6 text-center md:text-left">
+				<div class="inline-block px-4 py-1.5 rounded-full border border-slate-800 bg-slate-900/50 text-[10px] font-mono uppercase tracking-widest text-indigo-400">
+					Available for Collaboration
+				</div>
+				<h1 class="text-5xl md:text-8xl font-black tracking-tighter bg-gradient-to-br from-white via-slate-300 to-slate-600 bg-clip-text text-transparent leading-[1.1]">
+					Santhosh Kumar
+				</h1>
+				<p class="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto md:mx-0 font-light leading-relaxed">
+					Manager in <span class="text-white font-medium">Financial Sector</span> & <span class="text-indigo-400 font-medium font-mono tracking-tighter text-sm uppercase">Android Developer</span>. 
+				</p>
+			</header>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-8 mb-8">
+				
+				<div class="md:col-span-2 group relative overflow-hidden rounded-[2.5rem] bg-slate-900 border border-slate-800 p-8 md:p-12 hover:border-indigo-500/50 transition-all duration-500">
+					<div class="flex flex-col md:flex-row gap-10 items-start">
+						<div class="relative z-10 flex-1 space-y-4">
+							<div class="mb-8 w-20 h-20 rounded-[1.5rem] bg-white p-3 border border-slate-800 shadow-xl">
+								<img src="/snap-icon.png" alt="Snap2Contacts Icon" class="w-full h-full object-contain" />
+							</div>
+							<div class="flex items-center gap-2 mb-4">
+								<span class="relative flex h-3 w-3"><span class="animate-ping absolute h-full w-full rounded-full bg-green-400 opacity-75"></span><span class="relative h-3 w-3 rounded-full bg-green-500"></span></span>
+								<span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">Live on Play Store</span>
+							</div>
+							<h2 class="text-4xl font-bold tracking-tight">Snap2Contacts</h2>
+							<p class="text-slate-400 text-lg leading-relaxed">
+								A high-performance productivity tool utilizing offline-first OCR to instantly extract contacts from WhatsApp screenshots.
+							</p>
+							<a href={snapStoreLink} target="_blank" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-2xl font-bold transition-all hover:bg-indigo-500 hover:text-white active:scale-95">Get App</a>
+						</div>
+						<div class="relative w-full md:w-56 aspect-[9/16] bg-slate-800 rounded-3xl overflow-hidden border border-slate-700 shadow-2xl self-center shrink-0">
+							<img src="https://images.unsplash.com/photo-1616353071588-708dcff912e2?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+						</div>
+					</div>
+				</div>
+
+				<div class="group relative overflow-hidden rounded-[2.5rem] bg-slate-900/80 border border-slate-800 p-8 flex flex-col items-center justify-center min-h-[300px] transition-all hover:border-indigo-500/30">
+					<div class="absolute top-4 left-6 flex items-center gap-2">
+						<span class="text-[8px] font-mono text-slate-500 uppercase tracking-[0.2em] font-bold">Partner Content</span>
+					</div>
+					<div class="w-full h-full flex items-center justify-center min-h-[200px]">
+						<ins class="adsbygoogle"
+							 style="display:block"
+							 data-ad-client="ca-pub-7816244517423569"
+							 data-ad-slot="default"
+							 data-ad-format="auto"
+							 data-full-width-responsive="true"></ins>
+						<script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+					</div>
+					<div class="absolute -right-12 -bottom-12 w-40 h-40 bg-indigo-500/5 rounded-full blur-3xl"></div>
+				</div>
+
+				<div class="group relative overflow-hidden rounded-[2.5rem] bg-slate-900/40 border border-dashed border-slate-700 p-10 hover:border-slate-500 transition-all duration-500 flex flex-col justify-between min-h-[400px]">
+					<div>
+						<div class="mb-10 w-24 h-24 rounded-3xl bg-slate-800 p-4 border border-slate-700 shadow-xl group-hover:bg-slate-700 transition-colors">
+							<img src="/finserve-pro.png" alt="FinServe Pro Icon" class="w-full h-full object-contain" onerror="this.src='https://www.svgrepo.com/show/422280/shield-lock.svg'"/>
+						</div>
+						<h2 class="text-3xl font-bold mb-4 tracking-tight text-slate-300">FinServe Pro</h2>
+						<p class="text-slate-500 italic text-sm leading-relaxed">
+							Specialized management and counseling suite designed for professional monitoring, data integrity, and operational oversight within the financial sector.
+						</p>
+					</div>
+					<div class="flex items-center gap-2 mt-6">
+						<span class="relative flex h-2 w-2">
+							<span class="animate-ping absolute h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+							<span class="relative h-2 w-2 rounded-full bg-indigo-500"></span>
+						</span>
+						<span class="text-[10px] font-mono text-indigo-400 font-bold uppercase tracking-widest">Internal Beta</span>
+					</div>
+				</div>
+
+				<section class="md:col-span-2 group rounded-[2.5rem] bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 p-8 md:p-12 hover:border-amber-500/30 transition-all duration-700 shadow-2xl relative overflow-hidden">
+					<div class="flex flex-col md:flex-row gap-10 items-center">
+						<div class="relative w-48 md:w-56 shrink-0 transform group-hover:rotate-1 transition-transform">
+							<img src="/image_2.jpg" class="rounded-xl border border-slate-800 shadow-2xl" alt="Book Cover"/>
+						</div>
+						<div class="flex-1 space-y-4">
+							<div class="inline-flex items-center gap-2">
+								<div class="w-2 h-2 bg-amber-500 rounded-full"></div>
+								<span class="text-[10px] font-mono text-amber-500 uppercase tracking-widest font-bold">Upcoming Work</span>
+							</div>
+							<h2 class="text-4xl font-black text-white italic tracking-tighter">Vana Chinukulu</h2>
+							<p class="text-[9px] font-mono text-amber-500 uppercase tracking-widest">By Smt. Deborah Thyagaraju Balijepalli</p>
+							<p class="text-slate-400 text-base leading-relaxed">Inspired by <span class="text-amber-500 font-medium">Deuteronomy 32:2</span>, exploring teaching that drops as gentle rain upon the earth.</p>
+							<div class="flex gap-3">
+								<button disabled class="px-6 py-3 rounded-xl bg-slate-800 text-slate-500 font-bold text-[10px] uppercase border border-slate-700 cursor-not-allowed">Amazon Kindle Soon</button>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<div class="rounded-[2.5rem] bg-slate-900 border border-slate-800 p-8 flex flex-col items-center text-center hover:border-slate-700 transition-all">
+					<div class="w-24 h-24 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl mb-6">
+						<img src="/santhosh.jpg" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" alt="Santhosh Kumar" />
+					</div>
+					<h3 class="text-2xl font-bold text-white mb-2 uppercase tracking-widest leading-none">Let's Connect</h3>
+					<p class="text-slate-500 text-xs mb-6">Open for Tech & Finance collaborations.</p>
+					<div class="flex flex-col w-full gap-3">
+						<a href={linkedInLink} class="py-2.5 bg-slate-800 rounded-xl hover:bg-blue-600 text-white font-bold text-[10px] uppercase tracking-widest transition-all">LinkedIn</a>
+						<a href={emailContact} class="py-2.5 bg-white text-black rounded-xl hover:bg-slate-200 font-bold text-[10px] uppercase tracking-widest transition-all text-center">Email Me</a>
+					</div>
+				</div>
+			</div>
+
+			<section class="mt-12 rounded-[3rem] bg-gradient-to-b from-slate-900 to-slate-950 border border-slate-800 p-8 md:p-16 relative overflow-hidden shadow-inner">
+				<div class="max-w-4xl mx-auto space-y-12 text-pretty">
+					<header class="text-center space-y-4">
+						<span class="text-indigo-400 font-mono text-xs uppercase tracking-[0.3em] font-bold">Thought Leadership</span>
+						<h2 class="text-4xl md:text-7xl font-black text-white tracking-tight leading-tight">Artificial Intelligence: <br/><span class="text-indigo-500 italic">Promise, Power, and Challenges</span></h2>
+						<p class="text-slate-500 font-mono text-sm uppercase font-bold">By Vidudala Santhoshkumar</p>
+					</header>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-slate-300 text-lg leading-relaxed">
+						<div class="space-y-6">
+							<p>Knowledge has always been our guiding lantern. Artificial Intelligence (AI) is the latest extension—designed specifically to assist human life.</p>
+							<div class="p-6 bg-indigo-500/5 rounded-3xl border border-indigo-500/10 italic text-indigo-300 text-center text-lg">"AI should remain a companion to human intelligence, not its replacement."</div>
+						</div>
+						<div class="space-y-6">
+							<p>The future of AI must focus on preserving human wisdom and responsibility. With ethical innovation, AI can illuminate a future of progress and trust.</p>
+						</div>
+					</div>
+				</div>
+				<div class="absolute -top-24 -left-24 w-96 h-96 bg-indigo-600/5 rounded-full blur-[120px]"></div>
+			</section>
+
+			<footer class="mt-24 pt-12 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6 text-slate-600 text-[10px] font-bold uppercase tracking-widest">
+				<p>&copy; 2026 Vidudala Santhosh Kumar. All rights reserved.</p>
+				<p>Manager | Developer | Thinker</p>
+			</footer>
+		</main>
+	</body>
+</html>
