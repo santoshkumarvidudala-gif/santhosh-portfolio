@@ -37,6 +37,8 @@ const malakorAvatarPath = "/Emperor%20Malakor%20Avatar.png";
                 id="valenAvatarImg"
                 src={valenAvatarPath} 
                 alt="High King Valen Avatar" 
+                draggable="false"
+                oncontextmenu="return false;"
                 class="w-full h-full object-cover transition-opacity duration-300"
                 onerror="this.src='/dragon-king-hero.jpg'"
               />
@@ -69,6 +71,8 @@ const malakorAvatarPath = "/Emperor%20Malakor%20Avatar.png";
           <video 
             id="valenVideoElement" 
             controls 
+            controlslist="nodownload"
+            oncontextmenu="return false;"
             playsinline 
             preload="metadata"
             poster={valenAvatarPath}
@@ -119,6 +123,8 @@ const malakorAvatarPath = "/Emperor%20Malakor%20Avatar.png";
                 id="malakorAvatarImg"
                 src={malakorAvatarPath} 
                 alt="Emperor Malakor Avatar" 
+                draggable="false"
+                oncontextmenu="return false;"
                 class="w-full h-full object-cover transition-opacity duration-300"
                 onerror="this.src='/dragon-king-gameplay.jpg'"
               />
@@ -151,6 +157,8 @@ const malakorAvatarPath = "/Emperor%20Malakor%20Avatar.png";
           <video 
             id="malakorVideoElement" 
             controls 
+            controlslist="nodownload"
+            oncontextmenu="return false;"
             playsinline 
             preload="metadata"
             poster={malakorAvatarPath}
