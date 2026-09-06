@@ -1,0 +1,233 @@
+---
+// src/components/KingdomStatements.astro
+const valenVideoPath = "/King%20Valen%20realm%20Video.mp4";
+const malakorVideoPath = "/King%20Malakor%20realm%20Video.mp4";
+const valenAvatarPath = "/High%20King%20Valen%20Avatar.png";
+const malakorAvatarPath = "/Emperor%20Malakor%20Avatar.png";
+---
+
+<div class="relative w-full max-w-6xl mx-auto space-y-12">
+  <!-- Header -->
+  <div class="text-center space-y-4">
+    <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 font-mono text-xs uppercase font-bold tracking-widest inline-block">
+      Official Monarch Media & Decrees
+    </span>
+    <h2 class="text-3xl md:text-6xl font-black text-white tracking-tight">
+      Monarch <span class="bg-gradient-to-r from-amber-400 via-orange-500 to-purple-500 bg-clip-text text-transparent">Avatars & Realm Videos</span>
+    </h2>
+    <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+      High King Valen of Eldoria and Emperor Malakor of the Void. Experience their official public avatars, kingdom decrees, and dedicated video trailers.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <!-- KING VALEN CARD -->
+    <div class="relative group rounded-3xl bg-slate-900/90 border-2 border-amber-500/40 p-8 shadow-2xl overflow-hidden hover:border-amber-400 transition-all duration-500 backdrop-blur-xl flex flex-col justify-between">
+      <!-- Glow effect -->
+      <div class="absolute -top-24 -left-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="space-y-6 relative z-10">
+        <!-- Monarch Avatar & Title -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-6">
+          <div class="flex items-center gap-5">
+            <!-- King Valen Avatar Image -->
+            <div class="relative w-24 h-24 rounded-2xl overflow-hidden border-2 border-amber-400 shadow-xl shadow-amber-950/60 shrink-0 group-hover:scale-105 transition-transform duration-300">
+              <img 
+                id="valenAvatarImg"
+                src={valenAvatarPath} 
+                alt="High King Valen Avatar" 
+                class="w-full h-full object-cover transition-opacity duration-300"
+                onerror="this.src='/dragon-king-hero.jpg'"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
+              <span class="absolute bottom-1 right-1 text-sm">☀️</span>
+            </div>
+
+            <div>
+              <span class="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-widest block">SOLAR KINGDOM • ELDORIA</span>
+              <h3 class="text-2xl md:text-3xl font-black text-white tracking-tight">High King Valen</h3>
+              <span class="text-xs text-slate-400 font-mono">The Sunbringer Sovereign</span>
+            </div>
+          </div>
+          <span class="px-3 py-1 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-xl font-mono text-[10px] font-bold uppercase hidden sm:inline-block">
+            Order of Light
+          </span>
+        </div>
+
+        <!-- Royal Edict Statement -->
+        <div class="p-6 bg-slate-950/80 rounded-2xl border border-amber-500/20 relative space-y-3">
+          <span class="text-xs font-mono text-amber-400 font-bold uppercase block tracking-wider">📜 Official Kingdom Decree:</span>
+          <blockquote class="text-slate-200 text-sm md:text-base italic leading-relaxed font-light">
+            "Under the sacred light of Mount Pyre, the Solar Kingdom shall never bow to shadow. By the power of the Dragon King’s flame, justice shall be our sword, and honor our impenetrable aegis. Any warrior who steps into our realm shall find glory in battle and eternal protection under the Sun's grace."
+          </blockquote>
+          <span class="text-[10px] font-mono text-slate-500 block text-right font-bold">— Sealed by High King Valen of Eldoria</span>
+        </div>
+
+        <!-- Kingdom Video Preview Player -->
+        <div class="relative aspect-[16/9] rounded-2xl overflow-hidden border border-amber-500/30 bg-slate-950 shadow-inner">
+          <video 
+            id="valenVideoElement" 
+            controls 
+            playsinline 
+            preload="metadata"
+            poster={valenAvatarPath}
+            class="w-full h-full object-cover"
+          >
+            <source src={valenVideoPath} type="video/mp4" />
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <!-- Kingdom Traits -->
+        <div class="grid grid-cols-2 gap-3 text-xs font-mono">
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+            <span class="text-slate-500 block text-[9px] uppercase">REALM ELEMENT</span>
+            <span class="text-amber-400 font-bold">Holy Solar Flame</span>
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+            <span class="text-slate-500 block text-[9px] uppercase">CAPITAL CITADEL</span>
+            <span class="text-amber-300 font-bold">Pyre Keep</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Allegiance Button -->
+      <div class="pt-6 mt-6 border-t border-slate-800 relative z-10">
+        <button 
+          data-pledge="valen"
+          class="pledge-btn w-full py-3.5 bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 rounded-xl font-mono font-black text-xs uppercase tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2"
+        >
+          <span>☀️ PLEDGE ALLEGIANCE TO KING VALEN</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!-- KING MALAKOR CARD -->
+    <div class="relative group rounded-3xl bg-slate-900/90 border-2 border-purple-500/40 p-8 shadow-2xl overflow-hidden hover:border-purple-400 transition-all duration-500 backdrop-blur-xl flex flex-col justify-between">
+      <!-- Glow effect -->
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="space-y-6 relative z-10">
+        <!-- Monarch Avatar & Title -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-6">
+          <div class="flex items-center gap-5">
+            <!-- King Malakor Avatar Image -->
+            <div class="relative w-24 h-24 rounded-2xl overflow-hidden border-2 border-purple-400 shadow-xl shadow-purple-950/60 shrink-0 group-hover:scale-105 transition-transform duration-300">
+              <img 
+                id="malakorAvatarImg"
+                src={malakorAvatarPath} 
+                alt="Emperor Malakor Avatar" 
+                class="w-full h-full object-cover transition-opacity duration-300"
+                onerror="this.src='/dragon-king-gameplay.jpg'"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 to-transparent"></div>
+              <span class="absolute bottom-1 right-1 text-sm">👁️</span>
+            </div>
+
+            <div>
+              <span class="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-widest block">ABYSSAL DOMINION • MALAKOR</span>
+              <h3 class="text-2xl md:text-3xl font-black text-white tracking-tight">Emperor Malakor</h3>
+              <span class="text-xs text-slate-400 font-mono">The Void Sovereign</span>
+            </div>
+          </div>
+          <span class="px-3 py-1 bg-purple-500/20 border border-purple-500/40 text-purple-300 rounded-xl font-mono text-[10px] font-bold uppercase hidden sm:inline-block">
+            Void Dominion
+          </span>
+        </div>
+
+        <!-- Royal Edict Statement -->
+        <div class="p-6 bg-slate-950/80 rounded-2xl border border-purple-500/20 relative space-y-3">
+          <span class="text-xs font-mono text-purple-400 font-bold uppercase block tracking-wider">📜 Official Kingdom Decree:</span>
+          <blockquote class="text-slate-200 text-sm md:text-base italic leading-relaxed font-light">
+            "The light is but a fleeting flicker before the eternal abyss. From the deep void of Malakor, we claim all beneath the sky. Let the flames of dragonkind burn down the weak, for in the darkness, only the strongest shall rule and inherit supreme power."
+          </blockquote>
+          <span class="text-[10px] font-mono text-slate-500 block text-right font-bold">— Decree of Emperor Malakor of the Void</span>
+        </div>
+
+        <!-- Kingdom Video Preview Player -->
+        <div class="relative aspect-[16/9] rounded-2xl overflow-hidden border border-purple-500/30 bg-slate-950 shadow-inner">
+          <video 
+            id="malakorVideoElement" 
+            controls 
+            playsinline 
+            preload="metadata"
+            poster={malakorAvatarPath}
+            class="w-full h-full object-cover"
+          >
+            <source src={malakorVideoPath} type="video/mp4" />
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+
+        <!-- Kingdom Traits -->
+        <div class="grid grid-cols-2 gap-3 text-xs font-mono">
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+            <span class="text-slate-500 block text-[9px] uppercase">REALM ELEMENT</span>
+            <span class="text-purple-400 font-bold">Dark Void Magic</span>
+          </div>
+          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+            <span class="text-slate-500 block text-[9px] uppercase">CAPITAL CITADEL</span>
+            <span class="text-purple-300 font-bold">Shadow Fortress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Allegiance Button -->
+      <div class="pt-6 mt-6 border-t border-slate-800 relative z-10">
+        <button 
+          data-pledge="malakor"
+          class="pledge-btn w-full py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-mono font-black text-xs uppercase tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg flex items-center justify-center gap-2"
+        >
+          <span>👁️ PLEDGE ALLEGIANCE TO EMPEROR MALAKOR</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Kingdom Allegiance Status Bar -->
+  <div id="pledgeStatusBox" class="hidden p-4 rounded-2xl bg-slate-900 border border-slate-800 text-center font-mono text-xs">
+    <span class="text-slate-400">YOUR KINGDOM ALLEGIANCE: </span>
+    <span id="pledgeText" class="font-bold text-amber-400 uppercase">None</span>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btns = document.querySelectorAll('.pledge-btn');
+    const statusBox = document.getElementById('pledgeStatusBox');
+    const statusText = document.getElementById('pledgeText');
+
+    // Saved Allegiance
+    const savedPledge = localStorage.getItem('dragon_king_allegiance');
+    if (savedPledge) {
+      if (statusBox && statusText) {
+        statusBox.classList.remove('hidden');
+        statusText.textContent = savedPledge === 'valen' ? '☀️ High King Valen (Solar Kingdom of Eldoria)' : '👁️ Emperor Malakor (Abyssal Dominion of Void)';
+        statusText.className = savedPledge === 'valen' ? 'font-bold text-amber-400' : 'font-bold text-purple-400';
+      }
+    }
+
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const pledge = btn.getAttribute('data-pledge');
+        if (!pledge) return;
+
+        localStorage.setItem('dragon_king_allegiance', pledge);
+
+        if (statusBox && statusText) {
+          statusBox.classList.remove('hidden');
+          statusText.textContent = pledge === 'valen' ? '☀️ High King Valen (Solar Kingdom of Eldoria)' : '👁️ Emperor Malakor (Abyssal Dominion of Void)';
+          statusText.className = pledge === 'valen' ? 'font-bold text-amber-400' : 'font-bold text-purple-400';
+        }
+
+        btn.innerHTML = `<span>✓ PLEDGED TO ${pledge === 'valen' ? 'KING VALEN' : 'EMPEROR MALAKOR'}</span>`;
+        setTimeout(() => {
+          btn.innerHTML = pledge === 'valen' ? '<span>☀️ PLEDGE ALLEGIANCE TO KING VALEN</span>' : '<span>👁️ PLEDGE ALLEGIANCE TO EMPEROR MALAKOR</span>';
+        }, 2500);
+      });
+    });
+  });
+</script>

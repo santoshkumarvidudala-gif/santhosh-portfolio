@@ -1,0 +1,140 @@
+---
+// src/components/TrailerPlayer.astro
+const defaultTrailerPath = "/assets/Trailer.mp4";
+---
+
+<div id="trailerContainer" class="relative w-full max-w-5xl mx-auto rounded-3xl bg-slate-900 border border-amber-500/40 p-4 md:p-8 shadow-2xl overflow-hidden backdrop-blur-xl">
+  <!-- Top Header Bar -->
+  <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-4">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 border border-amber-500/40 text-amber-300 uppercase tracking-widest">
+          Official Media
+        </span>
+        <span class="text-xs text-slate-400 font-mono">4K Ultra HD • Official Game Trailer</span>
+      </div>
+      <h3 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+        <span>Dragon King: Official Trailer</span>
+      </h3>
+    </div>
+
+    <!-- Upload Custom Video Button -->
+    <div class="flex items-center gap-3">
+      <label for="trailerFileInput" class="cursor-pointer px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-600 text-slate-950 rounded-xl font-mono text-xs font-bold uppercase tracking-wider hover:scale-105 active:scale-95 transition-all flex items-center gap-2 shadow-lg shadow-amber-500/20">
+        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"/></svg>
+        <span>Change Video File</span>
+      </label>
+      <input type="file" id="trailerFileInput" accept="video/mp4,video/webm,video/ogg,video/quicktime" class="hidden" />
+    </div>
+  </div>
+
+  <!-- Video Screen Box -->
+  <div class="relative w-full aspect-[16/9] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl group">
+    
+    <!-- Real Video Element -->
+    <video 
+      id="dragonTrailerVideo" 
+      controls 
+      playsinline
+      preload="metadata"
+      poster="/dragon-king-hero.jpg"
+      class="w-full h-full object-cover block"
+    >
+      <source id="videoSource" src={defaultTrailerPath} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Status / Info Bar -->
+  <div class="mt-3 flex items-center justify-between text-xs font-mono text-slate-400 px-2">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+      <span id="videoStatusMsg">Loaded: Official Game Trailer (public/assets/Trailer.mp4)</span>
+    </div>
+    <span class="text-amber-400 font-bold">1080p / 4K Ready</span>
+  </div>
+
+  <!-- Video Info & Playlist Options -->
+  <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <button data-video={defaultTrailerPath} class="video-tab-btn active-video-tab text-left p-4 rounded-2xl bg-slate-950 border border-amber-500/50 hover:border-amber-400 transition-all flex items-center gap-3">
+      <div class="text-2xl">🎬</div>
+      <div>
+        <h5 class="text-sm font-bold text-white">Official Game Trailer</h5>
+        <span class="text-[10px] font-mono text-amber-400">Main Reveal • public/assets/Trailer.mp4</span>
+      </div>
+    </button>
+
+    <button data-video="gameplay" class="video-tab-btn text-left p-4 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-slate-600 transition-all flex items-center gap-3">
+      <div class="text-2xl">⚔️</div>
+      <div>
+        <h5 class="text-sm font-bold text-white">Gameplay 60FPS Showcase</h5>
+        <span class="text-[10px] font-mono text-slate-400">Unreal Engine 5 Action</span>
+      </div>
+    </button>
+
+    <button data-video="lore" class="video-tab-btn text-left p-4 rounded-2xl bg-slate-950/60 border border-slate-800 hover:border-slate-600 transition-all flex items-center gap-3">
+      <div class="text-2xl">🐉</div>
+      <div>
+        <h5 class="text-sm font-bold text-white">Dragon Sovereigns Reveal</h5>
+        <span class="text-[10px] font-mono text-slate-400">Mythic Classes & Abilities</span>
+      </div>
+    </button>
+  </div>
+</div>
+
+<script>
+  class TrailerManager {
+    constructor() {
+      this.fileInput = document.getElementById('trailerFileInput');
+      this.videoEl = document.getElementById('dragonTrailerVideo');
+      this.videoSource = document.getElementById('videoSource');
+      this.statusMsg = document.getElementById('videoStatusMsg');
+
+      this.initEvents();
+    }
+
+    initEvents() {
+      this.fileInput?.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          this.loadVideoFile(file);
+        }
+      });
+
+      // Video Tabs
+      document.querySelectorAll('.video-tab-btn').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const path = tab.getAttribute('data-video');
+          document.querySelectorAll('.video-tab-btn').forEach(t => {
+            t.classList.remove('border-amber-500/50', 'active-video-tab');
+            t.classList.add('border-slate-800');
+          });
+          tab.classList.add('border-amber-500/50', 'active-video-tab');
+          tab.classList.remove('border-slate-800');
+
+          if (path && path.startsWith('/')) {
+            this.videoSource.src = path;
+            this.videoEl.load();
+            this.videoEl.play();
+            if (this.statusMsg) this.statusMsg.textContent = `Loaded: ${path}`;
+          }
+        });
+      });
+    }
+
+    loadVideoFile(file) {
+      const videoURL = URL.createObjectURL(file);
+      this.videoSource.src = videoURL;
+      this.videoEl.load();
+      this.videoEl.play();
+
+      if (this.statusMsg) {
+        this.statusMsg.textContent = `Loaded custom file: ${file.name} (${(file.size / (1024 * 1024)).toFixed(1)} MB)`;
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new TrailerManager();
+  });
+</script>

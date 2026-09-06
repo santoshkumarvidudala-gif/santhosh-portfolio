@@ -1,0 +1,726 @@
+---
+// src/components/DragonKingTeaser.astro
+---
+
+<div class="relative w-full max-w-4xl mx-auto rounded-3xl bg-slate-900/90 border border-amber-500/30 p-4 md:p-8 shadow-2xl overflow-hidden backdrop-blur-md">
+  <!-- Top Header Bar -->
+  <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6 border-b border-slate-800 pb-4">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-gradient-to-r from-red-600 to-amber-500 text-slate-950 uppercase tracking-widest animate-pulse">
+          v0.2 Enhanced Teaser Edition
+        </span>
+        <span class="text-xs text-slate-400 font-mono">Unreal Mini-Engine</span>
+      </div>
+      <h3 class="text-2xl md:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+        <span class="bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 bg-clip-text text-transparent">Dragon King: Sovereign Flight</span>
+      </h3>
+      <p class="text-xs md:text-sm text-slate-400 mt-1">Select your Dragon Sovereign class, battle incoming dark drakes & Void Boss, collect mythic runes, and unleash Ultimates!</p>
+    </div>
+
+    <!-- Sound & Class Controls -->
+    <div class="flex items-center gap-3 shrink-0">
+      <button id="soundToggleBtn" class="px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-amber-400 text-xs font-mono font-bold flex items-center gap-2 transition-all">
+        <svg id="soundIconOn" class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M17.535 6.465a8 8 0 010 11.314M11 5L6 9H2v6h4l5 4V5z"/></svg>
+        <span id="soundText">Sound: ON</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Dragon Class Selector Buttons -->
+  <div class="mb-4">
+    <span class="text-[10px] font-mono text-slate-400 uppercase font-bold tracking-wider block mb-2">Select Your Dragon Sovereign Class:</span>
+    <div class="grid grid-cols-3 gap-2">
+      <button data-class="ignis" class="class-btn active-class-btn p-2.5 rounded-xl bg-slate-950 border border-amber-500/80 text-amber-300 font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all">
+        <span>🔥 Ignis (Fire)</span>
+      </button>
+      <button data-class="frostwing" class="class-btn p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-400 font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all hover:border-cyan-500/50">
+        <span>❄️ Frostwing (Ice)</span>
+      </button>
+      <button data-class="tempest" class="class-btn p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 text-slate-400 font-mono text-xs font-bold flex items-center justify-center gap-2 transition-all hover:border-purple-500/50">
+        <span>⚡ Tempest (Lightning)</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Game HUD Bar -->
+  <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-4 text-center font-mono">
+    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2">
+      <span class="text-[9px] text-slate-400 block uppercase">SCORE</span>
+      <span id="gameScore" class="text-lg font-bold text-amber-400">0</span>
+    </div>
+    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2">
+      <span class="text-[9px] text-slate-400 block uppercase">HIGH SCORE</span>
+      <span id="gameHighScore" class="text-lg font-bold text-amber-300">0</span>
+    </div>
+    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2">
+      <span class="text-[9px] text-slate-400 block uppercase">HEALTH</span>
+      <div class="w-full bg-slate-800 h-2.5 rounded-full mt-1 overflow-hidden p-0.5 border border-slate-700">
+        <div id="gameHealthBar" class="bg-gradient-to-r from-red-600 to-amber-400 h-full rounded-full transition-all duration-300" style="width: 100%;"></div>
+      </div>
+    </div>
+    <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2">
+      <span class="text-[9px] text-slate-400 block uppercase">ULTIMATE ENERGY</span>
+      <div class="w-full bg-slate-800 h-2.5 rounded-full mt-1 overflow-hidden p-0.5 border border-slate-700">
+        <div id="gameUltBar" class="bg-gradient-to-r from-amber-400 to-yellow-300 h-full rounded-full transition-all duration-300" style="width: 0%;"></div>
+      </div>
+    </div>
+    <div class="col-span-2 sm:col-span-1 bg-slate-950/80 border border-slate-800 rounded-xl p-2">
+      <span class="text-[9px] text-slate-400 block uppercase">SOVEREIGN RANK</span>
+      <span id="gameRank" class="text-xs font-bold text-red-400 truncate block mt-0.5">Hatchling</span>
+    </div>
+  </div>
+
+  <!-- Canvas Container -->
+  <div class="relative w-full aspect-[16/9] max-h-[480px] bg-slate-950 rounded-2xl overflow-hidden border border-amber-500/20 shadow-inner group">
+    <canvas id="dragonGameCanvas" class="w-full h-full block cursor-crosshair"></canvas>
+
+    <!-- Overlay Screen (Start / Game Over) -->
+    <div id="gameOverlay" class="absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center z-20">
+      <div class="max-w-md space-y-4">
+        <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-amber-500 to-red-600 p-3 shadow-xl shadow-red-900/50 flex items-center justify-center animate-bounce">
+          <svg class="w-10 h-10 text-slate-950 fill-current" viewBox="0 0 24 24">
+            <path d="M12 2L1 21h22L12 2zm0 3.5L19.5 19h-15L12 5.5z"/>
+          </svg>
+        </div>
+        <h4 id="overlayTitle" class="text-3xl font-black tracking-tight text-white">Unleash the Dragon King</h4>
+        <p id="overlaySubtitle" class="text-sm text-slate-300">
+          Fly using <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 font-mono text-amber-400">WASD / Arrows</kbd>, Shoot with <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 font-mono text-amber-400">Spacebar / Click</kbd>, and Unleash Ultimate with <kbd class="px-2 py-0.5 bg-slate-800 rounded border border-slate-700 font-mono text-amber-400">Key E</kbd>!
+        </p>
+        <div class="pt-2">
+          <button id="startGameBtn" class="px-8 py-4 rounded-xl bg-gradient-to-r from-amber-400 via-orange-500 to-red-600 text-slate-950 font-black text-lg uppercase tracking-wider shadow-lg shadow-red-600/30 hover:scale-105 active:scale-95 transition-all">
+            PLAY ENHANCED DEMO NOW
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls Bar with Ultimate Button & Mobile Buttons -->
+  <div class="mt-4 flex flex-col md:flex-row items-center justify-between gap-4">
+    <!-- Ultimate Ability Trigger Button -->
+    <button id="ultAbilityBtn" class="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500 text-slate-950 rounded-xl font-mono font-black text-sm uppercase tracking-widest opacity-50 cursor-not-allowed transition-all shadow-lg flex items-center justify-center gap-2">
+      <span>⚡ UNLEASH ULTIMATE (KEY E)</span>
+    </button>
+
+    <!-- Mobile Touch Controls -->
+    <div class="w-full md:w-auto grid grid-cols-2 md:hidden gap-3">
+      <div class="grid grid-cols-3 gap-1 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
+        <div></div>
+        <button id="btnUp" class="p-2.5 bg-slate-800 rounded text-white font-bold active:bg-amber-600">▲</button>
+        <div></div>
+        <button id="btnLeft" class="p-2.5 bg-slate-800 rounded text-white font-bold active:bg-amber-600">◄</button>
+        <button id="btnDown" class="p-2.5 bg-slate-800 rounded text-white font-bold active:bg-amber-600">▼</button>
+        <button id="btnRight" class="p-2.5 bg-slate-800 rounded text-white font-bold active:bg-amber-600">►</button>
+      </div>
+      <button id="btnFire" class="w-full bg-gradient-to-r from-red-600 to-amber-500 rounded-xl text-slate-950 font-black text-sm uppercase tracking-widest flex items-center justify-center active:scale-95 shadow-lg">
+        🔥 FIREBALL
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Advanced Browser Canvas Game Engine for Dragon King: Sovereign Flight
+  class DragonGame {
+    constructor() {
+      this.canvas = document.getElementById('dragonGameCanvas');
+      this.ctx = this.canvas.getContext('2d');
+      this.scoreEl = document.getElementById('gameScore');
+      this.highScoreEl = document.getElementById('gameHighScore');
+      this.healthBar = document.getElementById('gameHealthBar');
+      this.ultBar = document.getElementById('gameUltBar');
+      this.rankEl = document.getElementById('gameRank');
+      this.overlay = document.getElementById('gameOverlay');
+      this.overlayTitle = document.getElementById('overlayTitle');
+      this.overlaySubtitle = document.getElementById('overlaySubtitle');
+      this.startBtn = document.getElementById('startGameBtn');
+      this.soundBtn = document.getElementById('soundToggleBtn');
+      this.soundText = document.getElementById('soundText');
+      this.ultBtn = document.getElementById('ultAbilityBtn');
+
+      this.soundEnabled = true;
+      this.audioCtx = null;
+      this.selectedClass = 'ignis'; // ignis, frostwing, tempest
+
+      this.highScore = parseInt(localStorage.getItem('dragon_king_highscore') || '0');
+      this.highScoreEl.textContent = this.highScore.toString();
+
+      this.running = false;
+      this.score = 0;
+      this.health = 100;
+      this.ultEnergy = 0;
+
+      // Player Dragon
+      this.player = {
+        x: 50,
+        y: 150,
+        width: 50,
+        height: 40,
+        speed: 6,
+        wingAngle: 0
+      };
+
+      this.keys = {};
+      this.fireballs = [];
+      this.enemies = [];
+      this.runes = [];
+      this.particles = [];
+      this.boss = null;
+      this.lastSpawn = 0;
+      this.lastRuneSpawn = 0;
+      this.screenShake = 0;
+
+      this.initEvents();
+      this.resizeCanvas();
+    }
+
+    initAudio() {
+      if (!this.audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) {
+          this.audioCtx = new AudioContext();
+        }
+      }
+    }
+
+    playSound(type) {
+      if (!this.soundEnabled) return;
+      try {
+        this.initAudio();
+        if (!this.audioCtx) return;
+        
+        const osc = this.audioCtx.createOscillator();
+        const gain = this.audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(this.audioCtx.destination);
+
+        const now = this.audioCtx.currentTime;
+
+        if (type === 'fireball') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(480, now);
+          osc.frequency.exponentialRampToValueAtTime(120, now + 0.15);
+          gain.gain.setValueAtTime(0.25, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+          osc.start(now);
+          osc.stop(now + 0.15);
+        } else if (type === 'explosion') {
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(180, now);
+          osc.frequency.exponentialRampToValueAtTime(30, now + 0.35);
+          gain.gain.setValueAtTime(0.35, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.35);
+        } else if (type === 'rune') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(587.33, now);
+          osc.frequency.setValueAtTime(880, now + 0.1);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+          osc.start(now);
+          osc.stop(now + 0.2);
+        } else if (type === 'ultimate') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(120, now);
+          osc.frequency.exponentialRampToValueAtTime(800, now + 0.6);
+          gain.gain.setValueAtTime(0.5, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.7);
+          osc.start(now);
+          osc.stop(now + 0.7);
+        }
+      } catch (e) {
+        console.warn('Audio playback muted', e);
+      }
+    }
+
+    resizeCanvas() {
+      const rect = this.canvas.parentElement.getBoundingClientRect();
+      this.canvas.width = rect.width || 800;
+      this.canvas.height = rect.height || 450;
+    }
+
+    initEvents() {
+      window.addEventListener('resize', () => this.resizeCanvas());
+
+      window.addEventListener('keydown', (e) => {
+        this.keys[e.code] = true;
+        if (e.code === 'Space' && this.running) {
+          e.preventDefault();
+          this.shootFireball();
+        }
+        if ((e.code === 'KeyE' || e.code === 'KeyU') && this.running) {
+          this.unleashUltimate();
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        this.keys[e.code] = false;
+      });
+
+      this.canvas.addEventListener('mousedown', () => {
+        if (this.running) this.shootFireball();
+      });
+
+      this.startBtn.addEventListener('click', () => {
+        this.initAudio();
+        this.start();
+      });
+
+      this.soundBtn.addEventListener('click', () => {
+        this.soundEnabled = !this.soundEnabled;
+        this.soundText.textContent = this.soundEnabled ? 'Sound: ON' : 'Sound: OFF';
+      });
+
+      this.ultBtn?.addEventListener('click', () => {
+        if (this.running) this.unleashUltimate();
+      });
+
+      // Class Selection Buttons
+      document.querySelectorAll('.class-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const cls = btn.getAttribute('data-class');
+          if (!cls) return;
+          this.selectedClass = cls;
+          document.querySelectorAll('.class-btn').forEach(b => {
+            b.classList.remove('border-amber-500/80', 'text-amber-300', 'active-class-btn');
+            b.classList.add('border-slate-800', 'text-slate-400');
+          });
+          btn.classList.add('border-amber-500/80', 'text-amber-300', 'active-class-btn');
+          btn.classList.remove('border-slate-800', 'text-slate-400');
+        });
+      });
+
+      // Mobile Touch Controls
+      document.getElementById('btnUp')?.addEventListener('touchstart', () => this.keys['ArrowUp'] = true);
+      document.getElementById('btnUp')?.addEventListener('touchend', () => this.keys['ArrowUp'] = false);
+      document.getElementById('btnDown')?.addEventListener('touchstart', () => this.keys['ArrowDown'] = true);
+      document.getElementById('btnDown')?.addEventListener('touchend', () => this.keys['ArrowDown'] = false);
+      document.getElementById('btnLeft')?.addEventListener('touchstart', () => this.keys['ArrowLeft'] = true);
+      document.getElementById('btnLeft')?.addEventListener('touchend', () => this.keys['ArrowLeft'] = false);
+      document.getElementById('btnRight')?.addEventListener('touchstart', () => this.keys['ArrowRight'] = true);
+      document.getElementById('btnRight')?.addEventListener('touchend', () => this.keys['ArrowRight'] = false);
+      document.getElementById('btnFire')?.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (this.running) this.shootFireball();
+      });
+    }
+
+    start() {
+      this.running = true;
+      this.score = 0;
+      this.health = 100;
+      this.ultEnergy = 0;
+      this.fireballs = [];
+      this.enemies = [];
+      this.runes = [];
+      this.particles = [];
+      this.boss = null;
+      this.player.x = 50;
+      this.player.y = this.canvas.height / 2;
+
+      this.scoreEl.textContent = '0';
+      this.healthBar.style.width = '100%';
+      this.ultBar.style.width = '0%';
+      this.rankEl.textContent = 'Hatchling';
+      this.overlay.classList.add('hidden');
+      this.updateUltButtonState();
+
+      requestAnimationFrame((t) => this.loop(t));
+    }
+
+    updateUltButtonState() {
+      if (this.ultEnergy >= 100) {
+        this.ultBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        this.ultBtn.classList.add('animate-pulse', 'shadow-amber-500/50');
+      } else {
+        this.ultBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        this.ultBtn.classList.remove('animate-pulse', 'shadow-amber-500/50');
+      }
+    }
+
+    shootFireball() {
+      const color = this.selectedClass === 'frostwing' ? '#22d3ee' : (this.selectedClass === 'tempest' ? '#a855f7' : '#fbbf24');
+      this.fireballs.push({
+        x: this.player.x + this.player.width,
+        y: this.player.y + this.player.height / 2,
+        radius: 7,
+        speed: 11,
+        color
+      });
+      this.playSound('fireball');
+    }
+
+    unleashUltimate() {
+      if (this.ultEnergy < 100) return;
+      this.ultEnergy = 0;
+      this.ultBar.style.width = '0%';
+      this.updateUltButtonState();
+      this.screenShake = 20;
+
+      // Vaporize all enemies
+      this.enemies.forEach(e => {
+        this.score += e.pts;
+        this.addParticles(e.x, e.y, e.color, 25);
+      });
+      this.enemies = [];
+
+      if (this.boss) {
+        this.boss.hp -= 15;
+        this.addParticles(this.boss.x, this.boss.y, '#f59e0b', 30);
+      }
+
+      this.scoreEl.textContent = this.score.toString();
+      this.rankEl.textContent = this.getRank(this.score);
+      this.playSound('ultimate');
+    }
+
+    spawnEnemy() {
+      const types = [
+        { color: '#ef4444', hp: 1, pts: 100, speed: 4, size: 24, name: 'Shadow Wyrm' },
+        { color: '#a855f7', hp: 2, pts: 250, speed: 3.5, size: 28, name: 'Void Drake' }
+      ];
+      const type = Math.random() > 0.6 ? types[1] : types[0];
+      this.enemies.push({
+        x: this.canvas.width + 30,
+        y: Math.random() * (this.canvas.height - 60) + 30,
+        size: type.size,
+        color: type.color,
+        hp: type.hp,
+        pts: type.pts,
+        speed: type.speed + Math.random()
+      });
+    }
+
+    spawnBoss() {
+      if (this.boss) return;
+      this.boss = {
+        x: this.canvas.width + 50,
+        y: this.canvas.height / 2 - 40,
+        width: 80,
+        height: 80,
+        hp: 30,
+        maxHp: 30,
+        color: '#dc2626',
+        vy: 3
+      };
+    }
+
+    spawnRune() {
+      this.runes.push({
+        x: this.canvas.width + 20,
+        y: Math.random() * (this.canvas.height - 60) + 30,
+        radius: 14,
+        color: '#f59e0b',
+        pts: 300
+      });
+    }
+
+    addParticles(x, y, color, count = 15) {
+      for (let i = 0; i < count; i++) {
+        this.particles.push({
+          x, y,
+          vx: (Math.random() - 0.5) * 9,
+          vy: (Math.random() - 0.5) * 9,
+          size: Math.random() * 5 + 2,
+          color,
+          life: 1
+        });
+      }
+    }
+
+    getRank(score) {
+      if (score >= 3500) return 'Mythic Sovereign King';
+      if (score >= 2000) return 'Elder Dragon Monarch';
+      if (score >= 1000) return 'Flame Sovereign';
+      return 'Novice Hatchling';
+    }
+
+    gameOver() {
+      this.running = false;
+      if (this.score > this.highScore) {
+        this.highScore = this.score;
+        localStorage.setItem('dragon_king_highscore', this.highScore.toString());
+        this.highScoreEl.textContent = this.highScore.toString();
+      }
+
+      this.overlayTitle.textContent = 'Battle Concluded';
+      this.overlaySubtitle.innerHTML = `Score: <strong class="text-amber-400 font-mono text-lg">${this.score}</strong> | Rank: <strong class="text-red-400 font-mono">${this.getRank(this.score)}</strong>`;
+      this.startBtn.textContent = 'PLAY AGAIN';
+      this.overlay.classList.remove('hidden');
+    }
+
+    update(timestamp) {
+      // Screen Shake decay
+      if (this.screenShake > 0) this.screenShake *= 0.9;
+
+      // Player Movement
+      if (this.keys['KeyW'] || this.keys['ArrowUp']) this.player.y -= this.player.speed;
+      if (this.keys['KeyS'] || this.keys['ArrowDown']) this.player.y += this.player.speed;
+      if (this.keys['KeyA'] || this.keys['ArrowLeft']) this.player.x -= this.player.speed;
+      if (this.keys['KeyD'] || this.keys['ArrowRight']) this.player.x += this.player.speed;
+
+      this.player.wingAngle += 0.15;
+
+      // Bounds
+      this.player.x = Math.max(10, Math.min(this.canvas.width - this.player.width - 10, this.player.x));
+      this.player.y = Math.max(10, Math.min(this.canvas.height - this.player.height - 10, this.player.y));
+
+      // Spawning
+      if (timestamp - this.lastSpawn > 1000) {
+        this.spawnEnemy();
+        this.lastSpawn = timestamp;
+      }
+
+      if (timestamp - this.lastRuneSpawn > 4500) {
+        this.spawnRune();
+        this.lastRuneSpawn = timestamp;
+      }
+
+      if (this.score >= 1500 && !this.boss) {
+        this.spawnBoss();
+      }
+
+      // Update Fireballs
+      for (let i = this.fireballs.length - 1; i >= 0; i--) {
+        const f = this.fireballs[i];
+        f.x += f.speed;
+        if (f.x > this.canvas.width) this.fireballs.splice(i, 1);
+      }
+
+      // Update Enemies
+      for (let i = this.enemies.length - 1; i >= 0; i--) {
+        const e = this.enemies[i];
+        e.x -= e.speed;
+
+        // Collision with player
+        const distToPlayer = Math.hypot(e.x - (this.player.x + 25), e.y - (this.player.y + 20));
+        if (distToPlayer < e.size + 18) {
+          this.health -= 20;
+          this.screenShake = 10;
+          this.healthBar.style.width = Math.max(0, this.health) + '%';
+          this.addParticles(e.x, e.y, '#ef4444', 18);
+          this.playSound('explosion');
+          this.enemies.splice(i, 1);
+          if (this.health <= 0) this.gameOver();
+          continue;
+        }
+
+        // Collision with fireballs
+        for (let j = this.fireballs.length - 1; j >= 0; j--) {
+          const f = this.fireballs[j];
+          if (Math.hypot(e.x - f.x, e.y - f.y) < e.size + f.radius) {
+            e.hp--;
+            this.fireballs.splice(j, 1);
+            if (e.hp <= 0) {
+              this.score += e.pts;
+              this.ultEnergy = Math.min(100, this.ultEnergy + 15);
+              this.ultBar.style.width = this.ultEnergy + '%';
+              this.updateUltButtonState();
+              this.scoreEl.textContent = this.score.toString();
+              this.rankEl.textContent = this.getRank(this.score);
+              this.addParticles(e.x, e.y, e.color, 18);
+              this.playSound('explosion');
+              this.enemies.splice(i, 1);
+              break;
+            }
+          }
+        }
+
+        if (e.x < -40) this.enemies.splice(i, 1);
+      }
+
+      // Update Boss
+      if (this.boss) {
+        this.boss.x = Math.max(this.canvas.width - 120, this.boss.x - 2);
+        this.boss.y += this.boss.vy;
+        if (this.boss.y < 20 || this.boss.y > this.canvas.height - 100) this.boss.vy *= -1;
+
+        // Collision with fireballs
+        for (let j = this.fireballs.length - 1; j >= 0; j--) {
+          const f = this.fireballs[j];
+          if (f.x > this.boss.x && f.y > this.boss.y && f.y < this.boss.y + this.boss.height) {
+            this.boss.hp--;
+            this.fireballs.splice(j, 1);
+            this.addParticles(f.x, f.y, '#f59e0b', 8);
+            if (this.boss.hp <= 0) {
+              this.score += 1500;
+              this.scoreEl.textContent = this.score.toString();
+              this.rankEl.textContent = this.getRank(this.score);
+              this.addParticles(this.boss.x + 40, this.boss.y + 40, '#dc2626', 40);
+              this.playSound('explosion');
+              this.boss = null;
+              break;
+            }
+          }
+        }
+      }
+
+      // Update Runes
+      for (let i = this.runes.length - 1; i >= 0; i--) {
+        const r = this.runes[i];
+        r.x -= 2.5;
+        if (Math.hypot(r.x - (this.player.x + 25), r.y - (this.player.y + 20)) < r.radius + 22) {
+          this.score += r.pts;
+          this.health = Math.min(100, this.health + 20);
+          this.ultEnergy = Math.min(100, this.ultEnergy + 30);
+          this.healthBar.style.width = this.health + '%';
+          this.ultBar.style.width = this.ultEnergy + '%';
+          this.updateUltButtonState();
+          this.scoreEl.textContent = this.score.toString();
+          this.addParticles(r.x, r.y, '#f59e0b', 24);
+          this.playSound('rune');
+          this.runes.splice(i, 1);
+          continue;
+        }
+        if (r.x < -30) this.runes.splice(i, 1);
+      }
+
+      // Update Particles
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        const p = this.particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 0.04;
+        if (p.life <= 0) this.particles.splice(i, 1);
+      }
+    }
+
+    draw() {
+      this.ctx.save();
+      
+      // Apply screen shake
+      if (this.screenShake > 0.5) {
+        const shakeX = (Math.random() - 0.5) * this.screenShake;
+        const shakeY = (Math.random() - 0.5) * this.screenShake;
+        this.ctx.translate(shakeX, shakeY);
+      }
+
+      // Clear background
+      this.ctx.fillStyle = '#020617';
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+      // Dynamic Stars / Embers
+      this.ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
+      for (let i = 0; i < 25; i++) {
+        const ex = (Math.sin(i * 77 + Date.now() * 0.001) * 0.5 + 0.5) * this.canvas.width;
+        const ey = (Math.cos(i * 22 + Date.now() * 0.001) * 0.5 + 0.5) * this.canvas.height;
+        this.ctx.fillRect(ex, ey, 2.5, 2.5);
+      }
+
+      // Draw Player Dragon
+      this.ctx.save();
+      this.ctx.translate(this.player.x, this.player.y);
+
+      const wingY = Math.sin(this.player.wingAngle) * 8;
+
+      // Color scheme based on class
+      const mainColor = this.selectedClass === 'frostwing' ? '#06b6d4' : (this.selectedClass === 'tempest' ? '#9333ea' : '#f59e0b');
+      const coreColor = this.selectedClass === 'frostwing' ? '#38bdf8' : (this.selectedClass === 'tempest' ? '#c084fc' : '#ef4444');
+
+      // Dragon Body
+      this.ctx.fillStyle = mainColor;
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, 20);
+      this.ctx.lineTo(28, 0);
+      this.ctx.lineTo(50, 20);
+      this.ctx.lineTo(28, 40);
+      this.ctx.closePath();
+      this.ctx.fill();
+
+      // Core Glow
+      this.ctx.fillStyle = coreColor;
+      this.ctx.beginPath();
+      this.ctx.arc(26, 20, 9, 0, Math.PI * 2);
+      this.ctx.fill();
+
+      // Wing Flares
+      this.ctx.strokeStyle = '#ffffff';
+      this.ctx.lineWidth = 2.5;
+      this.ctx.beginPath();
+      this.ctx.moveTo(12, 5);
+      this.ctx.lineTo(-10, -8 + wingY);
+      this.ctx.moveTo(12, 35);
+      this.ctx.lineTo(-10, 48 - wingY);
+      this.ctx.stroke();
+
+      this.ctx.restore();
+
+      // Draw Fireballs
+      this.fireballs.forEach(f => {
+        this.ctx.fillStyle = f.color;
+        this.ctx.shadowColor = f.color;
+        this.ctx.shadowBlur = 12;
+        this.ctx.beginPath();
+        this.ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+        this.ctx.fill();
+      });
+      this.ctx.shadowBlur = 0;
+
+      // Draw Enemies
+      this.enemies.forEach(e => {
+        this.ctx.fillStyle = e.color;
+        this.ctx.beginPath();
+        this.ctx.arc(e.x, e.y, e.size, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.strokeStyle = '#ffffff';
+        this.ctx.lineWidth = 1.5;
+        this.ctx.stroke();
+      });
+
+      // Draw Boss Titan
+      if (this.boss) {
+        this.ctx.fillStyle = this.boss.color;
+        this.ctx.fillRect(this.boss.x, this.boss.y, this.boss.width, this.boss.height);
+        this.ctx.strokeStyle = '#f59e0b';
+        this.ctx.lineWidth = 3;
+        this.ctx.strokeRect(this.boss.x, this.boss.y, this.boss.width, this.boss.height);
+
+        // Boss Health Bar
+        const barWidth = (this.boss.hp / this.boss.maxHp) * this.boss.width;
+        this.ctx.fillStyle = '#ef4444';
+        this.ctx.fillRect(this.boss.x, this.boss.y - 12, barWidth, 6);
+
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.font = 'bold 11px sans-serif';
+        this.ctx.fillText('VOID TITAN BOSS', this.boss.x, this.boss.y - 18);
+      }
+
+      // Draw Runes
+      this.runes.forEach(r => {
+        this.ctx.fillStyle = r.color;
+        this.ctx.beginPath();
+        this.ctx.arc(r.x, r.y, r.radius, 0, Math.PI * 2);
+        this.ctx.fill();
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.font = '11px monospace';
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText('ᚠ', r.x, r.y + 4);
+      });
+
+      // Draw Particles
+      this.particles.forEach(p => {
+        this.ctx.fillStyle = p.color;
+        this.ctx.globalAlpha = Math.max(0, p.life);
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        this.ctx.fill();
+      });
+      this.ctx.globalAlpha = 1;
+
+      this.ctx.restore();
+    }
+
+    loop(timestamp) {
+      if (!this.running) return;
+      this.update(timestamp);
+      this.draw();
+      requestAnimationFrame((t) => this.loop(t));
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new DragonGame();
+  });
+</script>

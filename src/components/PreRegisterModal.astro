@@ -1,0 +1,284 @@
+---
+// src/components/PreRegisterModal.astro
+---
+
+<div id="preregisterModal" class="relative w-full max-w-3xl mx-auto rounded-3xl bg-slate-900 border border-amber-500/30 p-6 md:p-10 shadow-2xl overflow-hidden backdrop-blur-xl">
+  <!-- Glowing Amber Accent Border Top -->
+  <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-amber-400 to-orange-500"></div>
+
+
+
+  <!-- Official Single Game Email Identity Banner -->
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 bg-slate-950/90 border border-amber-500/30 rounded-2xl text-xs font-mono mb-6 backdrop-blur-md">
+    <div class="flex items-center gap-2.5">
+      <span class="text-amber-400 text-lg">✉️</span>
+      <div>
+        <span class="text-slate-400 block text-[10px] uppercase font-bold">Official Game & Pre-Registration Email</span>
+        <a href="mailto:preregisterdragonking@gmail.com" class="text-amber-300 font-bold text-sm hover:text-white transition-colors">preregisterdragonking@gmail.com</a>
+      </div>
+    </div>
+    <div class="text-right border-t sm:border-t-0 sm:border-l border-slate-800 pt-2 sm:pt-0 sm:pl-4">
+      <span class="text-green-400 text-xs font-bold block">✓ Direct User Mail Dispatch</span>
+      <span class="text-slate-400 text-[10px]">Submit form to send mail to us</span>
+    </div>
+  </div>
+
+  <!-- Global Pre-Registration Progress Bar -->
+  <div class="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 mb-8 space-y-3">
+    <div class="flex justify-between items-center text-xs font-mono font-bold">
+      <span class="text-slate-400">FOUNDER COMMUNITY GOAL</span>
+      <span class="text-amber-400" id="preregisterCount">88,490 / 100,000 WARRIORS</span>
+    </div>
+    <div class="w-full bg-slate-900 h-4 rounded-full overflow-hidden p-0.5 border border-slate-800">
+      <div class="bg-gradient-to-r from-red-600 via-amber-500 to-yellow-400 h-full rounded-full transition-all duration-1000 shadow-lg shadow-amber-500/50" style="width: 88.5%;"></div>
+    </div>
+    <div class="grid grid-cols-3 gap-2 text-center text-[10px] font-mono text-slate-400 pt-1">
+      <div class="text-amber-400 font-bold">✓ 25K: 500 Gems</div>
+      <div class="text-amber-400 font-bold">✓ 50K: Flame Skin</div>
+      <div class="text-amber-300 font-bold animate-pulse">★ 100K: Founder Mount</div>
+    </div>
+  </div>
+
+  <!-- Form Container -->
+  <form id="preregisterForm" class="space-y-5">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">Gamer Tag / Name</label>
+        <input 
+          type="text" 
+          id="preregName" 
+          required 
+          placeholder="e.g. FlameSovereign99" 
+          class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all"
+        />
+      </div>
+      <div>
+        <label class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">Email Address</label>
+        <input 
+          type="email" 
+          id="preregEmail" 
+          required 
+          placeholder="warrior@realm.com" 
+          class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 transition-all"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs font-mono font-bold uppercase text-slate-300 mb-2">Preferred Gaming Platform</label>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <label class="flex items-center justify-center gap-2 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-amber-500/50 transition-all text-xs font-mono font-bold text-slate-300 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/10 has-[:checked]:text-amber-300">
+          <input type="radio" name="platform" value="Android" checked class="hidden" />
+          <span>🤖 Android</span>
+        </label>
+        <label class="flex items-center justify-center gap-2 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-amber-500/50 transition-all text-xs font-mono font-bold text-slate-300 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/10 has-[:checked]:text-amber-300">
+          <input type="radio" name="platform" value="iOS" class="hidden" />
+          <span>🍏 iOS</span>
+        </label>
+        <label class="flex items-center justify-center gap-2 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-amber-500/50 transition-all text-xs font-mono font-bold text-slate-300 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/10 has-[:checked]:text-amber-300">
+          <input type="radio" name="platform" value="PC Steam" class="hidden" />
+          <span>💻 PC / Steam</span>
+        </label>
+        <label class="flex items-center justify-center gap-2 p-3 bg-slate-950 border border-slate-800 rounded-xl cursor-pointer hover:border-amber-500/50 transition-all text-xs font-mono font-bold text-slate-300 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-500/10 has-[:checked]:text-amber-300">
+          <input type="radio" name="platform" value="Web" class="hidden" />
+          <span>🌐 Web Browser</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Direct Email Dispatch Info -->
+    <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-500/20 text-xs text-slate-300 flex items-center gap-3 font-mono">
+      <span class="text-amber-400 text-base shrink-0">📨</span>
+      <p class="leading-relaxed">
+        Submitting will send your pre-registration details directly to <strong class="text-amber-300">preregisterdragonking@gmail.com</strong> so we receive your email for playtests & update notifications!
+      </p>
+    </div>
+
+    <button 
+      type="submit" 
+      class="w-full py-4 bg-gradient-to-r from-amber-400 via-orange-500 to-red-600 rounded-xl font-black text-slate-950 text-base uppercase tracking-wider shadow-lg shadow-amber-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+    >
+      <span>CLAIM FOUNDER PASS & SEND REGISTRATION MAIL</span>
+      <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </form>
+
+  <!-- Interactive Generated Founder Ticket Card -->
+  <div id="founderCardResult" class="hidden mt-8 pt-8 border-t border-slate-800 text-center space-y-6">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/30 text-green-400 font-mono text-xs font-bold uppercase">
+      <span class="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
+      ✓ Registration Dispatched to preregisterdragonking@gmail.com!
+    </div>
+    
+    <!-- The Pass Ticket -->
+    <div id="founderPassTicket" class="relative max-w-lg mx-auto bg-gradient-to-br from-slate-950 via-slate-900 to-red-950 border-2 border-amber-400/80 rounded-3xl p-6 shadow-2xl text-left overflow-hidden">
+      <!-- Decorative Dragon Watermark -->
+      <div class="absolute -right-8 -bottom-8 opacity-10 text-amber-400 font-black text-9xl select-none pointer-events-none">
+        🐉
+      </div>
+      
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <span class="text-[10px] font-mono text-amber-400 uppercase tracking-widest block font-bold">DRAGON KING • VIP FOUNDER PASS</span>
+          <h4 id="ticketName" class="text-2xl font-black text-white tracking-tight">Warrior Name</h4>
+        </div>
+        <div class="text-right">
+          <span class="text-[10px] font-mono text-slate-400 uppercase block">ID CODE</span>
+          <span id="ticketId" class="text-xs font-mono font-bold text-amber-300">#DK-7890</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 border-t border-b border-slate-800/80 py-4 mb-4 text-xs font-mono">
+        <div>
+          <span class="text-slate-500 block text-[9px] uppercase">REGISTERED USER EMAIL</span>
+          <span id="ticketEmail" class="text-amber-300 font-bold truncate block">user@realm.com</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[9px] uppercase">PLATFORM</span>
+          <span id="ticketPlatform" class="text-slate-200 font-bold">Android</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[9px] uppercase">FOUNDER RANK</span>
+          <span class="text-red-400 font-bold">First Dragon Legion</span>
+        </div>
+        <div>
+          <span class="text-slate-500 block text-[9px] uppercase">ACCESS CODE</span>
+          <span id="ticketCode" class="text-amber-300 font-bold">ALPHA-2026-DK</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center pt-1 border-t border-slate-800/60 text-[10px] font-mono text-slate-400">
+        <span>Official Recipient Mail:</span>
+        <span class="text-amber-300 font-bold">preregisterdragonking@gmail.com</span>
+      </div>
+    </div>
+
+    <!-- Official Notification Confirmation Box -->
+    <div class="p-4 bg-slate-950/80 border border-slate-800 rounded-2xl max-w-lg mx-auto text-left text-xs space-y-2">
+      <div class="flex items-center gap-2 text-green-400 font-mono font-bold">
+        <span>✉️ Registration Mail Created</span>
+      </div>
+      <p class="text-slate-300 leading-relaxed text-[11px]">
+        Your pre-registration details have been formatted for <strong class="text-amber-300 font-mono">preregisterdragonking@gmail.com</strong>. Click below to send your email so our team receives your registration!
+      </p>
+    </div>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-3">
+      <a id="sendEmailBtn" href="#" class="px-6 py-3 bg-gradient-to-r from-amber-400 via-orange-500 to-red-600 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
+        <span>✉️ Send Registration Email Now</span>
+      </a>
+      <button id="copyPassBtn" class="px-6 py-3 bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-mono font-bold hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+        <span>📋 Copy Founder ID</span>
+      </button>
+      <button id="copyEmailBtn" class="px-6 py-3 bg-slate-800 border border-slate-700 text-amber-400 rounded-xl text-xs font-mono font-bold hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+        <span>📧 Copy preregisterdragonking@gmail.com</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('preregisterForm');
+    const result = document.getElementById('founderCardResult');
+    const countEl = document.getElementById('preregisterCount');
+    const ticketName = document.getElementById('ticketName');
+    const ticketEmail = document.getElementById('ticketEmail');
+    const ticketId = document.getElementById('ticketId');
+    const ticketPlatform = document.getElementById('ticketPlatform');
+    const ticketCode = document.getElementById('ticketCode');
+    const sendEmailBtn = document.getElementById('sendEmailBtn') as HTMLAnchorElement;
+    const copyBtn = document.getElementById('copyPassBtn');
+    const copyEmailBtn = document.getElementById('copyEmailBtn');
+
+    // Check if already registered in localStorage
+    const savedReg = localStorage.getItem('dragon_king_prereg');
+    if (savedReg) {
+      const data = JSON.parse(savedReg);
+      if (ticketName) ticketName.textContent = data.name;
+      if (ticketEmail) ticketEmail.textContent = data.email;
+      if (ticketId) ticketId.textContent = data.id;
+      if (ticketPlatform) ticketPlatform.textContent = data.platform;
+      if (ticketCode) ticketCode.textContent = data.code;
+      setupEmailLink(data.name, data.email, data.platform, data.id, data.code);
+      form?.classList.add('hidden');
+      result?.classList.remove('hidden');
+    }
+
+    function setupEmailLink(name: string, email: string, platform: string, id: string, code: string) {
+      const recipient = 'preregisterdragonking@gmail.com';
+      const subject = encodeURIComponent(`Dragon King Pre-Registration - ${name}`);
+      const body = encodeURIComponent(
+        `Hello Dragon King Team,\n\nPlease register my email for Dragon King game pre-registration, closed playtests, and official game update notifications.\n\n` +
+        `-- WARRIOR REGISTRATION DETAILS --\n` +
+        `Gamer Tag / Name: ${name}\n` +
+        `User Email: ${email}\n` +
+        `Platform: ${platform}\n` +
+        `Founder ID: ${id}\n` +
+        `Access Code: ${code}\n\n` +
+        `Thank you!`
+      );
+      const mailtoUrl = `mailto:${recipient}?subject=${subject}&body=${body}`;
+      if (sendEmailBtn) {
+        sendEmailBtn.href = mailtoUrl;
+      }
+      return mailtoUrl;
+    }
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = (document.getElementById('preregName') as HTMLInputElement).value;
+      const email = (document.getElementById('preregEmail') as HTMLInputElement).value;
+      const platformEl = document.querySelector('input[name="platform"]:checked') as HTMLInputElement;
+      const platform = platformEl ? platformEl.value : 'Android';
+
+      const uniqueId = '#DK-' + Math.floor(1000 + Math.random() * 9000);
+      const code = 'ALPHA-' + Math.floor(100 + Math.random() * 900) + '-DK';
+
+      const data = { name, email, platform, id: uniqueId, code };
+      localStorage.setItem('dragon_king_prereg', JSON.stringify(data));
+
+      if (ticketName) ticketName.textContent = name;
+      if (ticketEmail) ticketEmail.textContent = email;
+      if (ticketId) ticketId.textContent = uniqueId;
+      if (ticketPlatform) ticketPlatform.textContent = platform;
+      if (ticketCode) ticketCode.textContent = code;
+
+      // Update count visually
+      if (countEl) {
+        countEl.textContent = '88,491 / 100,000 WARRIORS';
+      }
+
+      const mailtoUrl = setupEmailLink(name, email, platform, uniqueId, code);
+
+      form.classList.add('hidden');
+      result?.classList.remove('hidden');
+
+      // Trigger mailto dispatch automatically so user's mail client opens pre-filled to preregisterdragonking@gmail.com
+      setTimeout(() => {
+        window.location.href = mailtoUrl;
+      }, 500);
+    });
+
+    copyBtn?.addEventListener('click', () => {
+      const codeText = ticketCode?.textContent || 'ALPHA-2026-DK';
+      navigator.clipboard.writeText(codeText);
+      if (copyBtn) {
+        copyBtn.innerHTML = '<span>✓ Code Copied!</span>';
+        setTimeout(() => {
+          copyBtn.innerHTML = '<span>📋 Copy Founder ID</span>';
+        }, 2500);
+      }
+    });
+
+    copyEmailBtn?.addEventListener('click', () => {
+      navigator.clipboard.writeText('preregisterdragonking@gmail.com');
+      if (copyEmailBtn) {
+        copyEmailBtn.innerHTML = '<span>✓ Email Copied!</span>';
+        setTimeout(() => {
+          copyEmailBtn.innerHTML = '<span>📧 Copy preregisterdragonking@gmail.com</span>';
+        }, 2500);
+      }
+    });
+  });
+</script>
